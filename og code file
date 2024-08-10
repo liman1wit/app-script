@@ -1,0 +1,132 @@
+function doGet(e) {
+  return HtmlService.createTemplateFromFile('Recorder').evaluate();
+
+}
+function include(filename) {
+
+    return HtmlService.createHtmlOutputFromFile(filename).getContent();
+
+}
+
+function Add_Row(first, last, ID,sType,Position,ExAff,Con_Name,Spon,Locat,date,title,PubType,link){
+
+
+  var theList = [first, last, ID,sType,Position,ExAff,Con_Name,Spon,Locat,date,title,PubType,link];
+  var sh = SpreadsheetApp.getActiveSheet();
+
+  sh.appendRow(theList);
+
+
+  return(theList);
+}
+
+function SearchAll(){
+  var text = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Sheet1").createTextFinder("Tucker").matchEntireCell(true).matchCase(true).matchFormulaText(false).ignoreDiacritics(true).findAll();
+text.forEach(function (range) {
+    range.setBackground("red")
+  });
+
+}
+
+
+//====================== Saba ======================
+
+
+  // Search with Title ====================== WORKING ======================
+
+function SearchByTitle(title) {
+  const sheet = SpreadsheetApp.getActiveSpreadsheet(); // get active sheet access
+  const data = sheet.getDataRange().getValues();
+  const results = [];
+
+  // Iterate through the rows to find matches
+  for (let i = 1; i < data.length; i++) { // ignore first row
+    if (data[i][10] && data[i][10].toLowerCase().includes(title.toLowerCase())) { // 11th column is index 10
+      // display data according to its type 
+      results.push(`
+        <div>
+          <p><strong>First Name:</strong> ${data[i][0]}</p>
+          <p><strong>Last Name:</strong> ${data[i][1]}</p> 
+          <p><strong>WID:</strong> ${data[i][2]}</p>
+          <p><strong>Student Type:</strong> ${data[i][3]}</p>
+          <p><strong>Position:</strong> ${data[i][4]}</p>
+          <p><strong>Affiliation:</strong> ${data[i][5]}</p>
+          <p><strong>Journal/Conference Name:</strong> ${data[i][6]}</p>
+          <p><strong>Sponsor:</strong> ${data[i][7]}</p>
+          <p><strong>Location:</strong> ${data[i][8]}</p>
+          <p><strong>Date:</strong> ${data[i][9]}</p>
+          <p><strong>Publication Title:</strong> ${data[i][10]}</p>
+          <p><strong>Publication Type:</strong> ${data[i][11]}</p>
+          <a href = "${data[i][12]}"><strong>WEB-LINK</strong> </a>
+        </div>
+      `);
+    }
+  }
+
+  // nothing = NA
+  if (results.length === 0) {
+    return 'NA';
+  }
+
+  // march them into strings idk how this work found it online xD
+  return results.join('<br><br>');
+}
+
+
+function DeleteByTitle(title) {
+  const sheet = SpreadsheetApp.getActiveSpreadsheet(); // get active sheet access
+  const data = sheet.getDataRange().getValues();
+  const deletedData = [];
+  let rowsDeleted = 0;
+
+  // title must be string no numbers idk how to solve this issue
+  title = String(title).toLowerCase();
+
+  // same as search but this time we delte not display using deeteData.push and the row/column info
+  for (let i = data.length - 1; i > 0; i--) { // Start from the bottom to avoid index shifting
+    if (data[i][10] && data[i][10].toString().toLowerCase().includes(title)) { // 7th column is index 6
+      deletedData.push(data[i]);
+      sheet.deleteRow(i + 1); // deleteRow is 1-based index
+      rowsDeleted++;
+    }
+  }
+
+  // data we delted
+  if (rowsDeleted > 0) {
+    return {
+      message: 'SUCCESS',
+      deletedData: deletedData.map(row => row.join(', ')).join('<br>')
+    };
+  } else {
+    return {
+      message: 'NA',
+      deletedData: ''
+    };
+  }
+}
+
+
+// Editing Data in Sheets
+
+function editByTitle(new_first, new_last, new_ID, new_sType, new_Position, new_ExAff, new_Con_Name, new_Spon, new_Locat, new_date, new_title, new_PubType, new_link, title) {
+  const sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet(); // Get active sheet
+  const data = sheet.getDataRange().getValues();
+  
+  // Convert title to string and lowercase makes it so that we dont have any capitalization issues when doing smt else
+  title = String(title).toLowerCase();
+
+  // Loop through data from bottom to top
+  for (let i = data.length - 1; i > 0; i--) {
+    if (data[i][10] && data[i][10].toString().toLowerCase().includes(title)) { // 11th column (index 10)
+      sheet.deleteRow(i + 1); // Delete the row (1-based index)
+    }
+  }
+
+  // Add new row with new data
+  const newRow = [new_first, new_last, new_ID, new_sType, new_Position, new_ExAff, new_Con_Name, new_Spon, new_Locat, new_date, new_title, new_PubType, new_link];
+  sheet.appendRow(newRow);
+
+  return newRow;
+}
+
+
