@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <title>Scholarly Paper Repository</title>
+  <base target="_top">
+  </head>
+  <body>
+ <p style="font-size:150%">Author Details: </p>
+  <label for="first">First Name:</label><br>
+  <input type="text" id="fname"name="fname"><br>
+  <label for="last">Last Name:</label><br>
+  <input type="text" id="lname"name="lname"><br>
+  <label for="WID">WID:</label><br>
+  <input type="text" id="WID"name="WID"><br>
+
+  <label for="studentType">Select Student Type:</label>
+  <select id="studentType" name="studentType">
+  <option value="Undergraduate">Undergraduate</option>
+  <option value="Graduate">Graduate</option><br>
+
+  <label for="Position">Position:</label><br>
+  <input type="text" id="Pos"name="Pos"><br>
+
+  <label for="Aff">External Affilation:</label>
+  <br>
+  <textarea id="Aff" name="Aff"rows="4" cols="50">
+</textarea><br><br>
+
+<!--
+  <input
+  type="radio"
+  id="StudentUndergrad"
+  name="Student"
+  value= "Undergrad"
+  >
+  <label for="StudentUndergrad">Undergraduate</label><br>
+  <input
+  type="radio"
+  id="StudentGrad"
+  name="Student"
+  value= "Grad"
+  >
+  <label for="StudentGrad">Graduate</label><br>
+
+ <div id="departmentSelection">
+    <!-- Department selection will be shown here -->
+  </div>
+
+  <div id="publicationType">
+    <!-- Publication type selection will be shown here -->
+  </div>
+
+  <script>
+    // Get references to the department and publication type divs
+    const departmentSelection = document.getElementById('departmentSelection');
+    const publicationType = document.getElementById('publicationType');
+
+    // Add an event listener to detect changes in radio buttons
+    document.querySelectorAll('input[name="Student"]').forEach((radio) => {
+      radio.addEventListener('change', function() {
+        // Clear any previous content
+        departmentSelection.innerHTML = '';
+        publicationType.innerHTML = '';
+
+        // Check which radio button is checked
+        if (this.value === 'Undergrad') {
+          // If Undergraduate is selected, show undergraduate departments
+          departmentSelection.innerHTML = `
+            <label for="undergradDepartment">Select Undergraduate Department:</label>
+            <select id="undergradDepartment" name="undergradDepartment">
+              <option value="Engineering">Engineering</option>
+              <option value="Science">Science</option>
+              <option value="Business">Business</option>
+            </select>
+          `;
+        } else if (this.value === 'Grad') {
+          // If Graduate is selected, show graduate departments
+          departmentSelection.innerHTML = `
+            <label for="gradDepartment">Select Graduate Department:</label>
+            <select id="gradDepartment" name="gradDepartment">
+              <option value="Engineering">Engineering</option>
+              <option value="Science">Science</option>
+              <option value="Business">Business</option>
+              <option value="Humanities">Humanities</option>
+            </select>
+          `;
+        }
+
+        // Add publication type selection for slides
+        publicationType.innerHTML = `
+          <label for="publicationTypeSelect">Select Publication Type:</label>
+          <select id="publicationTypeSelect" name="publicationTypeSelect">
+            <option value="Slides">Slides</option>
+            <option value="Paper">Paper</option>
+            <!-- Add other publication types as needed -->
+          </select>
+        `;
+      });
+    });
+    //-->
+  </script>
+
+
+
+<p style="font-size:150%">Journal / Conference Details: </p>
+ <label for="Con_name">Name:</label><br>
+<input type="text" id="Con_name"name="Con_name"><br>
+<label for="Sponsor">Sponsoring Organization:</label><br>
+<input type="text" id="Sponsor"name="Sponsor"><br>
+<label for="Location">Location:</label><br>
+<input type="text" id="Location"name="Location"><br>
+<label for="Date">Date (dd/mm/yyyy):</label><br>
+<input type="text" id="Date"name="Date"><br>
+
+
+
+
+<p style="font-size:150%">Publication Details: </p>
+<label for="Title">Publication Title:</label><br>
+  <input type="text" id="Title"name="Title"><br>
+<p>Type of Publication (Select All That Apply):</p>
+
+<input type="checkbox" id="paper" name="paper" value="Paper">
+
+<label for="paper"> Paper</label><br>
+<input type="checkbox" id="poster" name="poster" value="Poster">
+<label for="poster"> Poster</label><br>
+<input type="checkbox" id="slides" name="slides" value="Slides">
+<label for="slides"> Slides</label><br>
+
+
+ <label for="Link">Links to the Publication(s):</label>
+  <br>
+  <textarea id="Link" name="Link"rows="4" cols="50">
+</textarea><br><br>
+
+<input type = "button"
+class="button"
+id="btnAddRow"
+name="button"
+value="Enter Item"><br>
+</body>
+
+<!--====================== Saba ======================
+
+
+  // Search and Delete By Title ====================== WORKING ====================== -->
+
+<body> 
+  <input type="text" id="search" placeholder="Enter title to search">
+  <button id="searchbtn" onclick="Search()">Search</button>
+
+  
+  <input type="text" id="delete" placeholder="Enter title to delete">
+  <button id="deletebtn" onclick="Delete()">Delete</button>
+
+  <p id="SearchResults"></p>
+  <p id="DeletedResults"></p>
+
+</body>
+<!--
+  // Editing stored Data -->
+
+<label for="new_first">Updated First Name:</label><br>
+    <input type="text" id="new_first" name="new_first"><br>
+
+    <label for="new_last">Updated Last Name:</label><br>
+    <input type="text" id="new_last" name="new_last"><br>
+
+    <label for="new_ID">Updated ID:</label><br>
+    <input type="text" id="new_ID" name="new_ID"><br>
+
+    <label for="new_sType">Select Updated Student Type:</label><br>
+    <select id="new_sType" name="new_sType">
+      <option value="Undergraduate">Undergraduate</option>
+      <option value="Graduate">Graduate</option>
+    </select><br>
+
+    <label for="new_Position">Updated Position:</label><br>
+    <input type="text" id="new_Position" name="new_Position"><br>
+
+    <label for="new_ExAff">Updated Affiliation:</label><br>
+    <input type="text" id="new_ExAff" name="new_ExAff"><br>
+
+    <label for="new_Con_Name">Updated Conference Name:</label><br>
+    <input type="text" id="new_Con_Name" name="new_Con_Name"><br>
+
+    <label for="new_Spon">Updated Sponsor:</label><br>
+    <input type="text" id="new_Spon" name="new_Spon"><br>
+
+    <label for="new_Locat">Updated Location:</label><br>
+    <input type="text" id="new_Locat" name="new_Locat"><br>
+
+    <label for="new_date">Updated Date:</label><br>
+    <input type="text" id="new_date" name="new_date"><br>
+
+    <label for="new_title">Updated Title:</label><br>
+    <input type="text" id="new_title" name="new_title"><br>
+
+    <label for="new_PubType">Updated Publication Type:</label><br>
+  <input type="checkbox" id="new_PubType" name="new_PubType" value="new_PubType">
+
+  <label for="paper"> Paper</label><br>
+  <input type="checkbox" id="poster" name="poster" value="Poster">
+  <label for="poster"> Poster</label><br>
+  <input type="checkbox" id="slides" name="slides" value="Slides">
+  <label for="slides"> Slides</label><br>
+
+  <label for="new_link">Updated Link:</label><br>
+  <input type="text" id="new_link" name="new_link"><br>
+
+  <button id="editbtn" onclick="EditbyTitle()" value="Submit">Submit Edit<br>
+
+  <p id="editResult"></p>
+
+
+
+<?!= include("RecorderJS");?>
+</html>
