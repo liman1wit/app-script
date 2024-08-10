@@ -1,0 +1,153 @@
+<script>
+console.log('Page is Loaded');
+var first;
+var last;
+
+function cbBtnAdd (){
+console.log("Clicked");
+first = String(fname.value);
+last = String(lname.value);
+ID = String(WID.value);
+sType = String(studentType.value);
+Position = String(Pos.value);
+ExAff = String(Aff.value);
+Con_Name = String(Con_name.value);
+Spon = String(Sponsor.value);
+Locat = String(Location.value);
+date = String(Date.value);
+title = String(Title.value);
+paperType = String(paper.value);
+posterType = String(poster.value);
+slidesType = String(slides.value);
+PubType = paperType.concat(" ",posterType," ", slidesType);
+link = String(Link.value);
+console.log(first);
+google.script.run.Add_Row(first, last, ID,sType,Position,ExAff,Con_Name,Spon,Locat,date,title,PubType, link);
+}
+
+
+//function Search(){
+// var search = google.script.run.SearchAll();
+// document.getElementById("SearchResults").innerHTML = "Results: " + search;
+//}
+
+function Search() {
+  const searchKeyword = document.getElementById("search").value;
+
+  if (searchKeyword.trim() === "") {
+    alert("Please enter a keyword to search.");
+    return;
+  }
+
+  google.script.run
+    .withSuccessHandler(function (results) {
+      document.getElementById("SearchResults").innerHTML = "Results: <br>" + results;
+    })
+    .SearchByMultipleColumns(searchKeyword);
+}
+
+
+
+fname = document.getElementById("fname");
+lname = document.getElementById("lname");
+WID = document.getElementById("WID");
+studentType = document.getElementById("studentType");
+Pos = document.getElementById("Pos");
+Aff = document.getElementById("Aff");
+Con_name = document.getElementById("Con_name");
+Sponsor = document.getElementById("Sponsor");
+Location = document.getElementById("Location");
+Date = document.getElementById("Date");
+Title = document.getElementById("Title");
+
+
+paper = document.getElementById("paper");
+
+poster = document.getElementById("poster");
+slides = document.getElementById("slides");
+Link = document.getElementById("Link");
+
+btnAddRow.onclick = cbBtnAdd;
+searchbtn.onclick = Search;
+
+
+//====================== Saba ======================
+
+
+  // Search with Title ====================== WORKING ======================
+  
+  function Search() {
+    const searchTitle = document.getElementById("search").value;
+    
+     if searhc is emtpy do alert
+    if (searchTitle.trim() === "") {
+      alert("Please enter a title to search.");
+      return;
+    }
+
+     Call the Google Apps Script function to search by title
+    google.script.run
+     .withSuccessHandler(function(results) {
+       document.getElementById("SearchResults").innerHTML = "Results: <br>" + results;
+     })
+      .SearchByTitle(searchTitle);
+  }
+
+  function Delete() {
+      const deleteTitle = document.getElementById("delete").value;
+      
+      // if input empty alert
+      if (deleteTitle.trim() === "") {
+        alert("Please enter a title to delete.");
+        return;
+      }
+
+      // Call the Google Apps Script function to delete by title
+      google.script.run
+        .withSuccessHandler(function(response) {
+          const { message, deletedData } = response;
+          //display results
+          if (message === 'SUCCESS') {
+            document.getElementById("DeletedResults").innerHTML = "Deleted Rows:<br>" + deletedData;
+          } else if (message === 'NA') {
+            document.getElementById("DeletedResults").innerHTML = "No rows found with the specified title.";
+          } else {
+            document.getElementById("DeletedResults").innerHTML = "An error occurred while deleting rows.";
+          }
+        })
+        .DeleteByTitle(deleteTitle);
+    }
+
+// ============= Data Editing Functions ============= 
+
+
+function EditbyTitle() {
+
+    const new_first = document.getElementById("new_first").value;
+    const new_last= document.getElementById("new_last").value; 
+    const new_ID= document.getElementById("new_ID").value;
+    const new_sType= document.getElementById("new_sType").value;
+    const new_Position= document.getElementById("new_Position").value;
+    const new_ExAff= document.getElementById("new_ExAff").value;
+    const new_Con_Name= document.getElementById("new_Con_Name").value;
+    const new_Spon= document.getElementById("new_Spon").value;
+    const new_Locat= document.getElementById("new_Locat").value; //basically get all of the new data from the html
+    const new_date= document.getElementById("new_date").value; // save here to send out to the gs file and to sheets
+    const new_title= document.getElementById("new_title").value;
+    const new_PubType= document.getElementById("new_PubType").value;
+    const new_link= document.getElementById("new_link").value;
+    const title = document.getElementById("search").value;
+
+    if (title.trim() === "") { // if we dont have anything searched we dont have a target to delete and replace 
+      alert("Please enter a title to search before submitting an edit.");
+      return;
+    }
+
+    google.script.run.editByTitle(new_first, new_last, new_ID, new_sType, new_Position, new_ExAff, new_Con_Name, new_Spon, new_Locat, new_date, new_title, new_PubType, new_link, title);
+
+
+}
+//Nick
+
+
+</script>
